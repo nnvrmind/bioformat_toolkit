@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+.nfs*
+
+# Windows (на всякий случай)
+Thumbs.db
+Desktop.ini
+
+# Local input data
+/data/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Build and documentation
+docs/build/
+build/
+dist/
+*.egg-info/
