@@ -26,7 +26,7 @@ class Reader(ABC):
         filepath: str | Path
             Путь к файлу.
         """
-        self.filepath = Path(filepath)
+        self.filepath: Path = Path(filepath)
 
     @abstractmethod
     def __iter__(self) -> Iterator:
