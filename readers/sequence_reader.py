@@ -30,11 +30,15 @@ class SequenceReader(Reader):
         float
             Средняя длина последовательностей в файле.
         """
-        total_length = 0
-        count = 0
+        total_length: int = 0
+        count: int = 0
 
         for record in self:
             total_length += len(record)
             count += 1
 
+        if count == 0:
+            return 0.0
+
         return total_length / count
+
