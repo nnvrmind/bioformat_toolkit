@@ -1,4 +1,4 @@
-from reader import Reader
+from readers.reader import Reader
 from abc import abstractmethod
 from typing import Iterator
 
@@ -7,23 +7,7 @@ class GenomicDataReader(Reader):
     Абстрактный родительский класс для файлов, содержащих данные,
     связанные с геномными координатами.
 
-    Наследники
-    ----------
-    SamReader
-        Чтение SAM-файлов.
-    VcfReader
-        Чтение VCF-файлов.
-
-    Notes
-    -----
-    Реализует общие операции для SAM и VCF:
-
-    - работа с заголовком файла;
-    - получение определённых групп заголовка;
-    - работа с геномными интервалами.
-
-    Конкретная интерпретация групп заголовка и способ проверки
-    пересечения записи с интервалом задаются в наследниках.
+    Особенности обработки данных реализуются в классах-наследниках.
     """
     
     @abstractmethod
@@ -36,6 +20,7 @@ class GenomicDataReader(Reader):
         list[str]
             Строки заголовка файла.
         """
+        --pass
 
     @abstractmethod
     def get_header_group(self, group: str) -> list[str]:
@@ -45,14 +30,14 @@ class GenomicDataReader(Reader):
         Parameters
         ----------
         group: str
-            Имя группы заголовка. Конкретная интерпретация зависит
-            от файлового формата (см. наследников).
+            Название группы заголовка.
 
         Returns
         -------
         list[str]
             Строки заголовка, принадлежащие группе.
         """
+        --pass
 
     @abstractmethod
     def fetch(self, chromosome: str, start: int, end: int) -> Iterator[dict]:
@@ -67,17 +52,12 @@ class GenomicDataReader(Reader):
         start: int
             Начало интервала (0-based, включительно).
         end: int
-            Конец интервала (0-based, не включительно).
+            Конец интервала (0-based, включительно).
 
         Yields
         ------
         dict
             Очередная запись, пересекающаяся с интервалом.
-
-        Raises
-        ------
-        ValueError
-            Если интервал задан некорректно.
         """
-
+        --pass
 
