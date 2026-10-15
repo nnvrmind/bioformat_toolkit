@@ -20,7 +20,7 @@ class GenomicDataReader(Reader):
         list[str]
             Строки заголовка файла.
         """
-        --pass
+        pass
 
     @abstractmethod
     def get_header_group(self, group: str) -> list[str]:
@@ -37,7 +37,7 @@ class GenomicDataReader(Reader):
         list[str]
             Строки заголовка, принадлежащие группе.
         """
-        --pass
+        pass
 
     @abstractmethod
     def fetch(self, chromosome: str, start: int, end: int) -> Iterator[dict]:
@@ -50,14 +50,14 @@ class GenomicDataReader(Reader):
         chromosome: str
             Имя хромосомы (контига).
         start: int
-            Начало интервала (0-based, включительно).
+            Начало интервала (1-based, включительно).
         end: int
-            Конец интервала (0-based, включительно).
+            Конец интервала (1-based, включительно).
 
         Yields
         ------
         dict
             Очередная запись, пересекающаяся с интервалом.
         """
-        --pass
+        pass
 
