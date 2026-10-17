@@ -314,3 +314,31 @@ def test_fastq_reader_plot_empty_file_raises(tmp_path) -> None:
 
     with pytest.raises(ValueError):
         reader.plot_per_base_quality()
+
+
+def test_fastq_reader_plots_per_base_content() -> None:
+    """
+    Проверяет, что метод построения графика содержания нуклеотидов
+    работает без ошибок.
+    """
+    plt.show = lambda: None
+
+    reader = FastqReader(FASTQ_PATH)
+
+    reader.plot_per_base_content()
+
+
+def test_fastq_reader_content_plot_empty_file_raises(tmp_path) -> None:
+    """
+    Проверяет, что при попытке построить график
+    для пустого файла выбрасывается ValueError.
+    """
+    plt.show = lambda: None
+
+    filepath = tmp_path / "empty.fastq"
+    filepath.write_text("", encoding="utf-8")
+
+    reader = FastqReader(filepath)
+
+    with pytest.raises(ValueError):
+        reader.plot_per_base_content()

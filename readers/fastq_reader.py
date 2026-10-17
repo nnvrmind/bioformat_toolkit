@@ -165,3 +165,70 @@ class FastqReader(SequenceReader):
 
         plt.tight_layout()
         plt.show()
+
+    def plot_per_base_content(self) -> None:
+        """
+        Строит график содержания нуклеотидов по позициям.
+
+        Для каждой позиции вычисляет процент A, C, G и T
+        среди всех последовательностей, содержащих эту позицию.
+
+        Raises
+        ------
+        ValueError
+            Если FASTQ-файл не содержит последовательностей.
+        """
+        bases = "ACGT"
+
+        counts = {}
+        for base in bases:
+            counts[base] = []
+
+        position_counts: list[int] = []
+
+        for record in self:
+            sequence = record.seq.upper()
+
+            for position, nucleotide in enumerate(sequence):
+                if position == len(position_counts):
+                    position_counts.append(0)
+
+                    for base in bases:
+                        counts[base].append(0)
+
+                position_counts[position] += 1
+
+                if nucleotide in counts:
+                    counts[nucleotide][position] += 1
+
+        if not position_counts:
+            raise ValueError(
+                "Невозможно построить график: "
+                "FASTQ-файл не содержит последовательностей."
+            )
+
+        positions = range(1, len(position_counts) + 1)
+
+        plt.figure()
+
+        for base in bases:
+            percentages: list[float] = []
+
+            for position in range(len(position_counts)):
+                percentage = (
+                    counts[base][position]
+                    / position_counts[position]
+                    * 100
+                )
+                percentages.append(percentage)
+
+            plt.plot(positions, percentages, label=base)
+
+        plt.xlabel("Позиция в последовательности")
+        plt.ylabel("Содержание нуклеотида (%)")
+        plt.title("Содержание нуклеотидов по позициям")
+        plt.legend(title="Нуклеотид")
+        plt.grid(True, alpha=0.3)
+
+        plt.tight_layout()
+        plt.show()
