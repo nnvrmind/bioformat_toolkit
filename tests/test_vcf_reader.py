@@ -331,6 +331,25 @@ def test_iter_blank_lines() -> None:
     assert [record["POS"] for record in records] == ["1000", "2000"]
 
 
+def test_iter_empty_file() -> None:
+    """
+    Проверяет обработку пустого VCF-файла.
+
+    Expected
+    --------
+    При чтении пустого файла возникает ValueError.
+
+    Checks
+    ------
+    Возникновение исключения ValueError.
+    """
+    filepath: Path = Path("tests/data/vcf/empty.vcf")
+    reader: VcfReader = VcfReader(filepath)
+
+    with pytest.raises(ValueError):
+        list(reader)
+
+
 def test_count_variants() -> None:
     """
     Проверяет подсчёт количества вариантов в VCF-файле.
