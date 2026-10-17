@@ -232,3 +232,44 @@ class FastqReader(SequenceReader):
 
         plt.tight_layout()
         plt.show()
+
+    def plot_length_distribution(self) -> None:
+        """
+        Строит график распределения длин последовательностей.
+
+        Для каждой длины показывает количество прочтений
+        такой длины.
+
+        Raises
+        ------
+        ValueError
+            Если FASTQ-файл не содержит последовательностей.
+        """
+        length_counts: dict[int, int] = {}
+
+        for record in self:
+            length = len(record)
+            length_counts[length] = length_counts.get(length, 0) + 1
+
+        if not length_counts:
+            raise ValueError(
+                "Невозможно построить график: "
+                "FASTQ-файл не содержит последовательностей."
+            )
+
+        lengths = sorted(length_counts)
+
+        counts = []
+        for length in lengths:
+            counts.append(length_counts[length])
+
+        plt.figure()
+        plt.bar(lengths, counts, width=0.8)
+
+        plt.xlabel("Длина последовательности")
+        plt.ylabel("Количество прочтений")
+        plt.title("Распределение длин последовательностей")
+        plt.grid(True, axis="y", alpha=0.3)
+
+        plt.tight_layout()
+        plt.show()
