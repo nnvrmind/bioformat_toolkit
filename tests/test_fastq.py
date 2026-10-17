@@ -291,7 +291,16 @@ def test_fastq_reader_raises_for_missing_file(tmp_path: Path) -> None:
 
 def test_fastq_reader_plots_per_base_quality() -> None:
     """
-    Проверяет, что метод построения графика работает без ошибок.
+    Проверяет построение графика качества секвенирования по позициям.
+
+    Expected
+    --------
+    Строится график среднего значения Phred для каждой позиции
+    прочтений из FASTQ-файла.
+
+    Checks
+    ------
+    Проверяется успешное построение графика на тестовом FASTQ-файле.
     """
     plt.show = lambda: None
 
@@ -302,8 +311,15 @@ def test_fastq_reader_plots_per_base_quality() -> None:
 
 def test_fastq_reader_plot_empty_file_raises(tmp_path) -> None:
     """
-    Проверяет, что при попытке построить график
-    для пустого файла выбрасывается ValueError.
+    Проверяет обработку пустого FASTQ-файла при построении графика качества.
+
+    Expected
+    --------
+    При попытке построить график для пустого файла возникает ValueError.
+
+    Checks
+    ------
+    Создаётся пустой FASTQ-файл и проверяется возникновение ValueError.
     """
     plt.show = lambda: None
 
@@ -318,8 +334,15 @@ def test_fastq_reader_plot_empty_file_raises(tmp_path) -> None:
 
 def test_fastq_reader_plots_per_base_content() -> None:
     """
-    Проверяет, что метод построения графика содержания нуклеотидов
-    работает без ошибок.
+    Проверяет построение графика содержания нуклеотидов по позициям.
+
+    Expected
+    --------
+    Строится график с отдельной линией для каждого нуклеотида A, C, G и T.
+
+    Checks
+    ------
+    Проверяется успешное построение графика на тестовом FASTQ-файле.
     """
     plt.show = lambda: None
 
@@ -330,8 +353,15 @@ def test_fastq_reader_plots_per_base_content() -> None:
 
 def test_fastq_reader_content_plot_empty_file_raises(tmp_path) -> None:
     """
-    Проверяет, что при попытке построить график
-    для пустого файла выбрасывается ValueError.
+    Проверяет обработку пустого FASTQ-файла при построении графика состава.
+
+    Expected
+    --------
+    При попытке построить график для пустого файла возникает ValueError.
+
+    Checks
+    ------
+    Создаётся пустой FASTQ-файл и проверяется возникновение ValueError.
     """
     plt.show = lambda: None
 
@@ -346,8 +376,15 @@ def test_fastq_reader_content_plot_empty_file_raises(tmp_path) -> None:
 
 def test_fastq_reader_plots_length_distribution() -> None:
     """
-    Проверяет, что метод построения распределения длин
-    работает без ошибок.
+    Проверяет построение распределения длин последовательностей.
+
+    Expected
+    --------
+    Строится график, показывающий количество прочтений каждой длины.
+
+    Checks
+    ------
+    Проверяется успешное построение графика на тестовом FASTQ-файле.
     """
     plt.show = lambda: None
 
@@ -358,8 +395,15 @@ def test_fastq_reader_plots_length_distribution() -> None:
 
 def test_fastq_reader_length_plot_empty_file_raises(tmp_path) -> None:
     """
-    Проверяет, что при попытке построить график
-    для пустого файла выбрасывается ValueError.
+    Проверяет обработку пустого FASTQ-файла при построении распределения длин.
+
+    Expected
+    --------
+    При попытке построить график для пустого файла возникает ValueError.
+
+    Checks
+    ------
+    Создаётся пустой FASTQ-файл и проверяется возникновение ValueError.
     """
     plt.show = lambda: None
 
