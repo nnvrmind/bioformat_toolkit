@@ -1,5 +1,6 @@
 from pathlib import Path
 import pytest
+import pandas as pd
 from readers.vcf_reader import VcfReader
 
 
@@ -612,18 +613,27 @@ def test_count_by_region() -> None:
 
     Expected
     --------
-    Метод count_by_region() возвращает количество вариантов
-    на хромосоме chr1 в интервале [1000, 2000], равное 4.
+    Метод count_by_region() возвращает DataFrame с информацией
+    об интервале [1000, 2000] на хромосоме chr1 и количеством
+    вариантов, равным 4.
 
     Checks
     ------
-    Соответствие возвращаемого количества ожидаемому значению.
+    Тип результата, названия столбцов и значения в таблице.
     """
     filepath: Path = Path("tests/data/vcf/example.vcf")
     reader: VcfReader = VcfReader(filepath)
 
-    count: int = reader.count_by_region("chr1", 1000, 2000)
-    assert count == 4
+    df: pd.DataFrame = reader.count_by_region("chr1", 1000, 2000)
+
+    assert isinstance(df, pd.DataFrame)
+    assert list(df.columns) == ["chromosome", "start", "end", "count"]
+    assert len(df) == 1
+
+    assert df.iloc[0]["chromosome"] == "chr1"
+    assert df.iloc[0]["start"] == 1000
+    assert df.iloc[0]["end"] == 2000
+    assert df.iloc[0]["count"] == 4
 
 
 def test_count_by_region_no_variants() -> None:
@@ -632,18 +642,26 @@ def test_count_by_region_no_variants() -> None:
 
     Expected
     --------
-    Метод count_by_region() возвращает 0, если в заданном
-    геномном интервале отсутствуют варианты.
+    Метод count_by_region() возвращает DataFrame с информацией
+    об интервале [3000, 4000] на хромосоме chr1 и количеством
+    вариантов, равным 0.
 
     Checks
     ------
-    Равенство возвращаемого количества нулю.
+    Тип результата, наличие строки и нулевое количество вариантов.
     """
     filepath: Path = Path("tests/data/vcf/example.vcf")
     reader: VcfReader = VcfReader(filepath)
 
-    count: int = reader.count_by_region("chr1", 3000, 4000)
-    assert count == 0
+    df: pd.DataFrame = reader.count_by_region("chr1", 3000, 4000)
+
+    assert isinstance(df, pd.DataFrame)
+    assert len(df) == 1
+
+    assert df.iloc[0]["chromosome"] == "chr1"
+    assert df.iloc[0]["start"] == 3000
+    assert df.iloc[0]["end"] == 4000
+    assert df.iloc[0]["count"] == 0
 
 
 @pytest.mark.parametrize(

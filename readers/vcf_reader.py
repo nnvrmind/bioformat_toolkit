@@ -157,9 +157,9 @@ class VcfReader(GenomicDataReader):
             if chromosome == record["CHROM"] and start <= int(record["POS"]) <= end:
                 yield record
 
-    def count_by_region(self, chromosome: str, start: int, end: int) -> int:
+    def count_by_region(self, chromosome: str, start: int, end: int) -> pd.DataFrame:
         """
-        Возвращает количество вариантов в заданном геномном интервале.
+        Возвращает статистику количества вариантов в заданном геномном интервале.
 
         Parameters
         ----------
@@ -172,8 +172,9 @@ class VcfReader(GenomicDataReader):
 
         Returns
         -------
-        int
-            Количество вариантов в указанном интервале.
+        pd.DataFrame
+            Таблица с колонками chromosome, start, end, count.
+            count — количество вариантов в указанном интервале.
 
         Raises
         ------
@@ -184,8 +185,18 @@ class VcfReader(GenomicDataReader):
             или VCF-файл имеет некорректную структуру.
         """
         records: list[dict[str, str]] = list(self.fetch(chromosome, start, end))
+
         df: pd.DataFrame = pd.DataFrame(records)
-        return len(df)
+
+        result: pd.DataFrame = pd.DataFrame(
+            {
+                "chromosome": [chromosome],
+                "start": [start],
+                "end": [end],
+                "count": [len(df)],
+            }
+        )
+        return result
 
 
 
