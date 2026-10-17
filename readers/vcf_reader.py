@@ -2,6 +2,7 @@ from readers.genomic_data_reader import GenomicDataReader
 from typing import Iterator
 import pandas as pd
 
+
 class VcfReader(GenomicDataReader):
     """Класс для чтения и анализа файлов формата VCF."""
 
@@ -83,6 +84,9 @@ class VcfReader(GenomicDataReader):
 
         with open(self.filepath) as file:
             for line in file:
+                if not line.strip():
+                    continue
+
                 if line.startswith("#CHROM"):
                     columns = line.rstrip("\r\n").split("\t")
                     columns[0] = columns[0].lstrip("#")
@@ -98,7 +102,7 @@ class VcfReader(GenomicDataReader):
 
                     yield dict(zip(columns, values))
 
-        if not columns: # если файл закончился, а заголовок так и не встретился
+        if not columns:  # если файл закончился, а заголовок так и не встретился
             raise ValueError("В VCF-файле отсутствует заголовок #CHROM.")
 
     def count_variants(self) -> int:
