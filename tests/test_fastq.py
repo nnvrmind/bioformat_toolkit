@@ -2,6 +2,7 @@ import inspect
 from pathlib import Path
 
 import pytest
+from matplotlib import pyplot as plt
 
 from readers.seq import Seq
 from readers.fastq_record import FastqRecord
@@ -286,3 +287,30 @@ def test_fastq_reader_raises_for_missing_file(tmp_path: Path) -> None:
 
     with pytest.raises(FileNotFoundError):
         list(reader)
+
+
+def test_fastq_reader_plots_per_base_quality() -> None:
+    """
+    Проверяет, что метод построения графика работает без ошибок.
+    """
+    plt.show = lambda: None
+
+    reader = FastqReader(FASTQ_PATH)
+
+    reader.plot_per_base_quality()
+
+
+def test_fastq_reader_plot_empty_file_raises(tmp_path) -> None:
+    """
+    Проверяет, что при попытке построить график
+    для пустого файла выбрасывается ValueError.
+    """
+    plt.show = lambda: None
+
+    filepath = tmp_path / "empty.fastq"
+    filepath.write_text("", encoding="utf-8")
+
+    reader = FastqReader(filepath)
+
+    with pytest.raises(ValueError):
+        reader.plot_per_base_quality()

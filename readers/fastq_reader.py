@@ -1,5 +1,7 @@
 from typing import Iterator
 
+from matplotlib import pyplot as plt
+
 from readers.fastq_record import FastqRecord
 from readers.sequence_reader import SequenceReader
 
@@ -108,3 +110,58 @@ class FastqReader(SequenceReader):
                     seq=sequence,
                     quality=quality,
                 )
+
+    def plot_per_base_quality(self) -> None:
+        """
+        Строит график среднего качества секвенирования по позициям.
+
+        Используется кодировка Phred+33.
+
+        Raises
+        ------
+        ValueError
+            Если файл не содержит последовательностей или содержит
+            символы качества вне диапазона Phred+33.
+        """
+        quality_sums: list[float] = []
+        quality_counts: list[int] = []
+
+        for record in self:
+            for position, quality_char in enumerate(record.quality):
+                ascii_code = ord(quality_char)
+
+                if not 33 <= ascii_code <= 126:
+                    raise ValueError(
+                        "Символ качества не соответствует кодировке Phred+33."
+                    )
+
+                score = ascii_code - 33
+
+                if position == len(quality_sums):
+                    quality_sums.append(0.0)
+                    quality_counts.append(0)
+
+                quality_sums[position] += score
+                quality_counts[position] += 1
+
+        if not quality_sums:
+            raise ValueError(
+                "Невозможно построить график: "
+                "FASTQ-файл не содержит последовательностей."
+            )
+
+        average_scores = []
+        for i in range(len(quality_sums)):
+            average = quality_sums[i] / quality_counts[i]
+            average_scores.append(average)
+
+        positions = range(1, len(average_scores) + 1)
+
+        plt.plot(positions, average_scores, marker="o")
+        plt.xlabel("Позиция в последовательности")
+        plt.ylabel("Среднее качество Phred+33")
+        plt.title("Среднее качество секвенирования по позициям")
+        plt.grid(True, alpha=0.3)
+
+        plt.tight_layout()
+        plt.show()
