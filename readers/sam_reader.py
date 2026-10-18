@@ -42,34 +42,45 @@ class SamReader(GenomicDataReader):
                 header.append(line.rstrip("\n"))
         return header
 
-    def __iter__(self) -> Iterator[dict]:
-        """
-        Итератор по выравниваниям SAM-файла.
+    def __iter__(self) -> Iterator[SamRecord]:
+    """
+    Итератор по выравниваниям SAM-файла.
 
-        Yields
-        ------
-        dict
-            Словарь с полями выравнивания.
-        """
-        with open(self.filepath, "r", encoding="utf-8") as f:
-            for line in f:
-                if line.startswith("@"):
-                    continue
-                fields = line.rstrip("\n").split("\t")
-                if len(fields) < 11:
-                    continue
-                yield {
-                    "qname": fields[0],
-                    "flag": int(fields[1]),
-                    "rname": fields[2],
-                    "pos": int(fields[3]),
-                    "mapq": int(fields[4]),
-                    "cigar": fields[5],
-                    "rnext": fields[6],
-                    "pnext": int(fields[7]),
-                    "tlen": int(fields[8]),
-                    "seq": fields[9],
-                    "qual": fields[10],
+    Yields
+    ------
+    SamRecord
+        Словарь с полями выравнивания.
+
+    Raises
+    ------
+    ValueError
+        Если непустая строка данных содержит меньше 11 обязательных полей.
+    """
+    with open(self.filepath, "r", encoding="utf-8") as f:
+        for lineno, line in enumerate(f, start=1):
+            if line.startswith("@"):
+                continue                      # строка заголовка - пропуск
+            line = line.rstrip("\n")
+            if not line:
+                continue                      # пустая строка - пропуск
+            fields: list[str] = line.split("\t")
+            if len(fields) < 11:
+                raise ValueError(
+                    f"Строка {lineno}: ожидалось ≥11 полей SAM, "
+                    f"получено {len(fields)}"
+                )
+            yield SamRecord{
+                qname=fields[0],
+                flag=int(fields[1]),
+                rname=fields[2],
+                pos=int(fields[3]),
+                mapq=int(fields[4]),
+                cigar=fields[5],
+                rnext=fields[6],
+                pnext=int(fields[7]),
+                tlen=int(fields[8]),
+                seq=fields[9],
+                qual=fields[10],
                 }
 
     def get_header_group(self, group: str) -> list[str]:
