@@ -19,7 +19,7 @@ def edge_sam() -> SamReader:
     """SAM-файл с CIGAR-операциями S, D, I для проверки границ выравнивания."""
     return SamReader(DATA_DIR / "edge_cases.sam")
 
-def test_get_header(simple_sam):
+def test_get_header(simple_sam) -> None:
     """
     Возвращает заголовок файла в виде списка строк.
 
@@ -38,7 +38,7 @@ def test_get_header(simple_sam):
     assert all(line.startswith("@") for line in header)
 
 
-def test_get_header_group(simple_sam):
+def test_get_header_group(simple_sam) -> None:
     """
     Возвращает строки заголовка, относящиеся к указанной группе.
 
@@ -58,7 +58,7 @@ def test_get_header_group(simple_sam):
     assert simple_sam.get_header_group("@XX") == []
 
 
-def test_iter_records(simple_sam):
+def test_iter_records(simple_sam) -> None:
     """
     Итератор по выравниваниям SAM-файла.
 
@@ -83,7 +83,7 @@ def test_iter_records(simple_sam):
     assert records[0]["pos"] == 100
     assert records[0]["cigar"] == "10M"
 
-def test_fetch_overlap(simple_sam):
+def test_fetch_overlap(simple_sam) -> None:
     """
     Возвращает записи, пересекающиеся с интервалом.
 
@@ -100,7 +100,7 @@ def test_fetch_overlap(simple_sam):
     assert "read1" in qnames
 
 
-def test_fetch_boundary_touch(simple_sam):
+def test_fetch_boundary_touch(simple_sam) -> None:
     """
     Возвращает записи, пересекающиеся с интервалом (включительные границы).
 
@@ -117,7 +117,7 @@ def test_fetch_boundary_touch(simple_sam):
     assert "read1" in qnames
 
 
-def test_fetch_outside(simple_sam):
+def test_fetch_outside(simple_sam) -> None:
     """
     Возвращает записи, пересекающиеся с интервалом.
 
@@ -132,7 +132,7 @@ def test_fetch_outside(simple_sam):
     assert list(simple_sam.fetch("chr1", 110, 200)) == []
 
 
-def test_fetch_invalid_args(simple_sam):
+def test_fetch_invalid_args(simple_sam) -> None:
     """
     Проверяет некорректные аргументы интервала и хромосомы.
 
@@ -155,7 +155,7 @@ def test_fetch_invalid_args(simple_sam):
         list(simple_sam.fetch("", 1, 100))
 
 
-def test_fetch_softclip(edge_sam):
+def test_fetch_softclip(edge_sam) -> None:
     """
     Проверяет учёт soft clip (S) при определении интервала выравнивания.
 
@@ -172,7 +172,7 @@ def test_fetch_softclip(edge_sam):
     assert list(edge_sam.fetch("chr1", 107, 199)) == []
 
 
-def test_fetch_deletion(edge_sam):
+def test_fetch_deletion(edge_sam) -> None:
     """
     Проверяет учёт deletion (D) при определении интервала выравнивания.
 
@@ -190,7 +190,7 @@ def test_fetch_deletion(edge_sam):
     assert "with_deletion" not in qnames
 
 
-def test_fetch_insertion(edge_sam):
+def test_fetch_insertion(edge_sam) -> None:
     """
     Проверяет учёт insertion (I) при определении интервала выравнивания.
 
@@ -207,7 +207,7 @@ def test_fetch_insertion(edge_sam):
     assert list(edge_sam.fetch("chr1", 410, 499)) == []
 
 
-def test_count_alignments(simple_sam):
+def test_count_alignments(simple_sam) -> None:
     """
     Возвращает общее количество выравниваний в файле.
 
@@ -222,7 +222,7 @@ def test_count_alignments(simple_sam):
     assert simple_sam.count_alignments() == 5
 
 
-def test_count_by_chromosome(simple_sam):
+def test_count_by_chromosome(simple_sam) -> None:
     """
     Возвращает статистику количества выравниваний по хромосомам.
 
