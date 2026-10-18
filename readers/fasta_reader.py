@@ -3,25 +3,17 @@
 """
 
 from pathlib import Path
-from typing import Iterator, Union
+from typing import Iterator, Union, Optional, List
 
-from .seq import Seq
-from .sequence_reader import SequenceReader
+from readers.seq import Seq
+from readers.sequence_reader import SequenceReader
 
 
 class FastaReader(SequenceReader):
     """
     Класс для чтения FASTA-файлов.
     Наследуется от SequenceReader, получая методы count_sequences и average_length.
-
-    Parameters
-    ----------
-    filepath : str | Path
-        Путь к FASTA-файлу.
     """
-
-    def __init__(self, filepath: Union[str, Path]) -> None: 
-        super().__init__(filepath)
 
     def __iter__(self) -> Iterator[Seq]:
         """
@@ -39,8 +31,8 @@ class FastaReader(SequenceReader):
             Если файл не соответствует формату FASTA (нет символа '>' в начале).
         """
         with open(self.filepath, "r", encoding="utf-8") as file:
-            current_id = None
-            current_seq = []
+            current_id: Optional[str] = None
+            current_seq: List[str] = []
 
             for line in file:
                 line = line.strip()
@@ -51,7 +43,7 @@ class FastaReader(SequenceReader):
                     if current_id is not None:
                         yield Seq(current_id, "".join(current_seq))
                     
-                    current_id = line[1:]  
+                    current_id = line[1:]
                     current_seq = []
                 else:
                     if current_id is None:
