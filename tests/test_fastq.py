@@ -97,13 +97,13 @@ def test_fastq_record_requires_matching_lengths(quality: str) -> None:
 FASTQ_PATH = Path(__file__).parent / "data" / "fastq" / "example.fastq"
 
 
-def test_fastq_reader_reads_three_records() -> None:
+def test_fastq_reader_reads_four_records() -> None:
     """
     Проверяет чтение всех записей FASTQ-файла.
 
     Expected
     --------
-    Возвращаются три объекта FastqRecord в исходном порядке.
+    Возвращаются четыре объекта FastqRecord в исходном порядке.
 
     Checks
     ------
@@ -112,11 +112,12 @@ def test_fastq_reader_reads_three_records() -> None:
     reader = FastqReader(FASTQ_PATH)
     records = list(reader)
 
-    assert len(records) == 3
+    assert len(records) == 4
     assert [record.seq_id for record in records] == [
         "EAS54_6_R1_2_1_413_324",
         "EAS54_6_R1_2_1_540_792",
         "EAS54_6_R1_2_1_443_348",
+        "EAS54_6_R1_2_1_999_999",
     ]
     assert all(isinstance(record, FastqRecord) for record in records)
 
@@ -133,7 +134,7 @@ def test_fastq_reader_preserves_sequence_and_quality() -> None:
     ------
     Сравниваются поля полученных объектов с данными FASTQ-файла.
     """
-    lines = FASTQ_PATH.read_text(encoding="utf-8").splitlines()
+    lines = FASTQ_PATH.read_text(encoding="utf-8").splitlines()[:12]
 
     expected = [
         (lines[i][1:], lines[i + 1], lines[i + 3])
@@ -143,11 +144,11 @@ def test_fastq_reader_preserves_sequence_and_quality() -> None:
     records = list(FastqReader(FASTQ_PATH))
     actual = [
         (record.seq_id, record.seq, record.quality)
-        for record in records
+        for record in records[:3]
     ]
 
     assert actual == expected
-    assert [len(record) for record in records] == [25, 25, 25]
+    assert [len(record) for record in records] == [25, 25, 25, 8]
     assert all(
         len(record.seq) == len(record.quality)
         for record in records
@@ -160,7 +161,7 @@ def test_fastq_reader_counts_sequences_and_average_length() -> None:
 
     Expected
     --------
-    Количество записей равно 3, средняя длина равна 25.0.
+    Количество записей равно 4, средняя длина равна 20.75.
 
     Checks
     ------
@@ -168,8 +169,8 @@ def test_fastq_reader_counts_sequences_and_average_length() -> None:
     """
     reader = FastqReader(FASTQ_PATH)
 
-    assert reader.count_sequences() == 3
-    assert reader.average_length() == 25.0
+    assert reader.count_sequences() == 4
+    assert reader.average_length() == 20.75
 
 
 def test_fastq_reader_returns_generator() -> None:
@@ -414,3 +415,24 @@ def test_fastq_reader_length_plot_empty_file_raises(tmp_path) -> None:
 
     with pytest.raises(ValueError):
         reader.plot_length_distribution()
+
+
+def test_fastq_reader_reads_multiline_record() -> None:
+    """
+    Проверяет чтение многострочной FASTQ-записи.
+
+    Expected
+    --------
+    Строки последовательности и качества объединяются без изменений.
+
+    Checks
+    ------
+    Проверяются идентификатор, последовательность, качество и длина.
+    """
+    records = list(FastqReader(FASTQ_PATH))
+    record = records[3]
+
+    assert record.seq_id == "EAS54_6_R1_2_1_999_999"
+    assert record.seq == "ACGTACGT"
+    assert record.quality == ";;7;;8;;"
+    assert len(record) == 8
