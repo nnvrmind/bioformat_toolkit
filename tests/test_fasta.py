@@ -280,7 +280,7 @@ def test_fasta_reader_average_length() -> None:
 
     Checks
     ------
-    Для длин 126, 6 и 2 средняя длина должна быть равна 44.67.
+    Для длин 130, 6 и 2 средняя длина должна быть равна 46.0.
     """
     reader: FastaReader = FastaReader(DATA_DIR / "example.fasta")
     assert round(reader.average_length(), 2) == 46.0, "Метод average_length вернул неверное значение"
