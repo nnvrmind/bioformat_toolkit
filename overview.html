@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Обзор проекта &#8212; документация BioFormat Toolkit </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Справочник классов" href="api.html" />
+    <link rel="prev" title="BioFormat Toolkit" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>Обзор проекта<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>BioFormat Toolkit — набор инструментов на Python для чтения и анализа
+биоинформатических файлов форматов FASTA, FASTQ, SAM и VCF.</p>
+<p>Проект использует объектно-ориентированный подход. Классы для чтения
+файлов организованы в иерархию, а общая функциональность вынесена
+в родительские классы.</p>
+<section id="id2">
+<h2>Архитектура классов<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<p>На UML-диаграмме показаны отношения наследования между читателями
+разных форматов, а также связи классов записей последовательностей.</p>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="_images/architecture.png"><img alt="UML-диаграмма классов BioFormat Toolkit" src="_images/architecture.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">UML-диаграмма архитектуры BioFormat Toolkit.</span><a class="headerlink" href="#id5" title="Ссылка на это изображение">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id3">
+<h2>Поддерживаемые форматы<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<section id="fasta">
+<h3>FASTA<a class="headerlink" href="#fasta" title="Ссылка на этот заголовок">¶</a></h3>
+<p>FASTA используется для хранения биологических последовательностей
+с идентификаторами.</p>
+<p>Класс <code class="docutils literal notranslate"><span class="pre">FastaReader</span></code> читает записи FASTA и создаёт объекты <code class="docutils literal notranslate"><span class="pre">Seq</span></code>.
+Поддерживается чтение последовательностей, занимающих несколько строк.</p>
+<p>Для анализа последовательностей доступны подсчёт количества записей
+и вычисление средней длины.</p>
+</section>
+<section id="fastq">
+<h3>FASTQ<a class="headerlink" href="#fastq" title="Ссылка на этот заголовок">¶</a></h3>
+<p>FASTQ содержит биологические последовательности и соответствующие
+им значения качества секвенирования.</p>
+<p>Класс <code class="docutils literal notranslate"><span class="pre">FastqReader</span></code> читает записи FASTQ и создаёт объекты
+<code class="docutils literal notranslate"><span class="pre">FastqRecord</span></code>. Каждая запись хранит идентификатор, последовательность
+и строку качества.</p>
+<p>Также <code class="docutils literal notranslate"><span class="pre">FastqReader</span></code> позволяет строить три графика:</p>
+<ul class="simple">
+<li><p>качество секвенирования по позициям;</p></li>
+<li><p>содержание нуклеотидов по позициям;</p></li>
+<li><p>распределение длин последовательностей.</p></li>
+</ul>
+</section>
+<section id="sam">
+<h3>SAM<a class="headerlink" href="#sam" title="Ссылка на этот заголовок">¶</a></h3>
+<p>SAM хранит данные о выравнивании прочтений на референсные
+последовательности.</p>
+<p>Класс <code class="docutils literal notranslate"><span class="pre">SamReader</span></code> предоставляет чтение записей и заголовков,
+получение групп заголовка, подсчёт выравниваний, статистику
+по хромосомам и поиск выравниваний в заданном геномном интервале.</p>
+</section>
+<section id="vcf">
+<h3>VCF<a class="headerlink" href="#vcf" title="Ссылка на этот заголовок">¶</a></h3>
+<p>VCF используется для представления геномных вариантов.</p>
+<p>Класс <code class="docutils literal notranslate"><span class="pre">VcfReader</span></code> читает заголовки и записи о вариантах, позволяет
+получать группы метаданных, подсчитывать варианты, получать статистику
+по заданному региону и искать варианты в геномном интервале.</p>
+</section>
+</section>
+<section id="id4">
+<h2>Общие принципы<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<ul class="simple">
+<li><p>Классы чтения файлов наследуются от общих родительских классов.</p></li>
+<li><p>Для последовательной обработки записей используются итераторы
+и генераторы.</p></li>
+<li><p>Общие методы подсчёта последовательностей и средней длины реализованы
+в <code class="docutils literal notranslate"><span class="pre">SequenceReader</span></code>.</p></li>
+<li><p>Для анализа SAM и VCF используются операции работы с геномными
+интервалами, реализованные в соответствующих классах.</p></li>
+<li><p>Документация классов и методов формируется на основе docstrings
+с помощью Sphinx.</p></li>
+</ul>
+<p>Подробнее об интерфейсах и наследовании классов можно прочитать
+в документе <a class="reference internal" href="api.html"><span class="doc">Справочник классов</span></a>.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">BioFormat Toolkit</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Обзор проекта</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Архитектура классов</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Поддерживаемые форматы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Общие принципы</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Справочник классов</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="предыдущая глава">BioFormat Toolkit</a></li>
+      <li>Next: <a href="api.html" title="следующая глава">Справочник классов</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/overview.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

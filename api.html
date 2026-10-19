@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Справочник классов &#8212; документация BioFormat Toolkit </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="prev" title="Обзор проекта" href="overview.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1>Справочник классов<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>В этом разделе представлена техническая документация классов
+BioFormat Toolkit.</p>
+<p>Описания извлекаются непосредственно из исходного кода Python
+с помощью расширения Sphinx autodoc.</p>
+<section id="id2">
+<h2>Базовые классы<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<section id="reader">
+<h3>Reader<a class="headerlink" href="#reader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.reader.Reader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.reader.</span></span><span class="sig-name descname"><span class="pre">Reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/reader.html#Reader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.reader.Reader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Абстрактный базовый класс для чтения биоинформатических файлов.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>) – Путь к файлу.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="readers.reader.Reader.filepath">
+<span class="sig-name descname"><span class="pre">filepath</span></span><a class="headerlink" href="#readers.reader.Reader.filepath" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Путь к файлу в виде объекта pathlib.Path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="sequencereader">
+<h3>SequenceReader<a class="headerlink" href="#sequencereader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.sequence_reader.SequenceReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.sequence_reader.</span></span><span class="sig-name descname"><span class="pre">SequenceReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sequence_reader.html#SequenceReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sequence_reader.SequenceReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.reader.Reader" title="readers.reader.Reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Reader</span></code></a></p>
+<p>Абстрактный промежуточный класс для чтения файлов с последовательностями.</p>
+<p>Наследуется от Reader и добавляет общие для всех форматов
+последовательностей методы: подсчёт количества записей и
+вычисление средней длины.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sequence_reader.SequenceReader.count_sequences">
+<span class="sig-name descname"><span class="pre">count_sequences</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sequence_reader.html#SequenceReader.count_sequences"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sequence_reader.SequenceReader.count_sequences" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает количество последовательностей в файле.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Число записей в файле.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sequence_reader.SequenceReader.average_length">
+<span class="sig-name descname"><span class="pre">average_length</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sequence_reader.html#SequenceReader.average_length"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sequence_reader.SequenceReader.average_length" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Вычисляет среднюю длину последовательностей в файле.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Средняя длина последовательностей в файле.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="genomicdatareader">
+<h3>GenomicDataReader<a class="headerlink" href="#genomicdatareader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.genomic_data_reader.GenomicDataReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.genomic_data_reader.</span></span><span class="sig-name descname"><span class="pre">GenomicDataReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/genomic_data_reader.html#GenomicDataReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.genomic_data_reader.GenomicDataReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.reader.Reader" title="readers.reader.Reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">Reader</span></code></a></p>
+<p>Абстрактный родительский класс для файлов, содержащих данные,
+связанные с геномными координатами.</p>
+<p>Особенности обработки данных реализуются в классах-наследниках.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.genomic_data_reader.GenomicDataReader.get_header">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/genomic_data_reader.html#GenomicDataReader.get_header"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.genomic_data_reader.GenomicDataReader.get_header" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает заголовок файла в виде списка строк.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строки заголовка файла.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.genomic_data_reader.GenomicDataReader.get_header_group">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">get_header_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/genomic_data_reader.html#GenomicDataReader.get_header_group"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.genomic_data_reader.GenomicDataReader.get_header_group" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает строки заголовка, относящиеся к указанной группе.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> (<em>str</em>) – Название группы заголовка.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Строки заголовка, принадлежащие группе.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.genomic_data_reader.GenomicDataReader.fetch">
+<span class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/genomic_data_reader.html#GenomicDataReader.fetch"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.genomic_data_reader.GenomicDataReader.fetch" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Последовательно возвращает записи, расположенные в заданном
+геномном интервале или пересекающиеся с ним.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosome</strong> (<em>str</em>) – Имя хромосомы (контига).</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – Начало интервала (1-based, включительно).</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – Конец интервала (1-based, включительно).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – Очередная запись, пересекающаяся с интервалом.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Iterator</em>[dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="id3">
+<h2>Классы последовательностей<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h2>
+<section id="seq">
+<h3>Seq<a class="headerlink" href="#seq" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.seq.Seq">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.seq.</span></span><span class="sig-name descname"><span class="pre">Seq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/seq.html#Seq"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.seq.Seq" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Класс для хранения и обработки биологических последовательностей.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq_id</strong> (<em>str</em>) – Идентификатор последовательности, передаваемый при создании объекта.</p></li>
+<li><p><strong>seq</strong> (<em>str</em>) – Строка, содержащая биологическую последовательность.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="readers.seq.Seq.seq_id">
+<span class="sig-name descname"><span class="pre">seq_id</span></span><a class="headerlink" href="#readers.seq.Seq.seq_id" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Идентификатор последовательности.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="readers.seq.Seq.seq">
+<span class="sig-name descname"><span class="pre">seq</span></span><a class="headerlink" href="#readers.seq.Seq.seq" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Биологическая последовательность, представленная строкой символов.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="fastqrecord">
+<h3>FastqRecord<a class="headerlink" href="#fastqrecord" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.fastq_record.FastqRecord">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.fastq_record.</span></span><span class="sig-name descname"><span class="pre">FastqRecord</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">quality</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fastq_record.html#FastqRecord"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fastq_record.FastqRecord" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.seq.Seq" title="readers.seq.Seq"><code class="xref py py-class docutils literal notranslate"><span class="pre">Seq</span></code></a></p>
+<p>Класс для хранения одной записи FASTQ.</p>
+<p>Наследуется от Seq и дополнительно хранит информацию
+о качестве секвенирования.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>seq_id</strong> (<em>str</em>) – Идентификатор последовательности.</p></li>
+<li><p><strong>seq</strong> (<em>str</em>) – Биологическая последовательность.</p></li>
+<li><p><strong>quality</strong> (<em>str</em>) – Строка символов качества секвенирования.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="readers.fastq_record.FastqRecord.quality">
+<span class="sig-name descname"><span class="pre">quality</span></span><a class="headerlink" href="#readers.fastq_record.FastqRecord.quality" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строка символов качества секвенирования.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="id4">
+<h2>Классы для чтения файлов<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<section id="fastareader">
+<h3>FastaReader<a class="headerlink" href="#fastareader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.fasta_reader.FastaReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.fasta_reader.</span></span><span class="sig-name descname"><span class="pre">FastaReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fasta_reader.html#FastaReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fasta_reader.FastaReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.sequence_reader.SequenceReader" title="readers.sequence_reader.SequenceReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceReader</span></code></a></p>
+<p>Класс для чтения FASTA-файлов.
+Наследуется от SequenceReader, получая методы count_sequences и average_length.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="fastqreader">
+<h3>FastqReader<a class="headerlink" href="#fastqreader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.fastq_reader.FastqReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.fastq_reader.</span></span><span class="sig-name descname"><span class="pre">FastqReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fastq_reader.html#FastqReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fastq_reader.FastqReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.sequence_reader.SequenceReader" title="readers.sequence_reader.SequenceReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceReader</span></code></a></p>
+<p>Класс для чтения файлов формата FASTQ.</p>
+<p>Наследуется от SequenceReader и возвращает записи FastqRecord.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>) – Путь к FASTQ-файлу.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.fastq_reader.FastqReader.plot_per_base_quality">
+<span class="sig-name descname"><span class="pre">plot_per_base_quality</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fastq_reader.html#FastqReader.plot_per_base_quality"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fastq_reader.FastqReader.plot_per_base_quality" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строит график среднего качества секвенирования по позициям.</p>
+<p>Используется кодировка Phred+33.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если файл не содержит последовательностей или содержит
+    символы качества вне диапазона Phred+33.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.fastq_reader.FastqReader.plot_per_base_content">
+<span class="sig-name descname"><span class="pre">plot_per_base_content</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fastq_reader.html#FastqReader.plot_per_base_content"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fastq_reader.FastqReader.plot_per_base_content" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строит график содержания нуклеотидов по позициям.</p>
+<p>Для каждой позиции вычисляет процент A, C, G и T
+среди всех последовательностей, содержащих эту позицию.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если FASTQ-файл не содержит последовательностей.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.fastq_reader.FastqReader.plot_length_distribution">
+<span class="sig-name descname"><span class="pre">plot_length_distribution</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/fastq_reader.html#FastqReader.plot_length_distribution"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.fastq_reader.FastqReader.plot_length_distribution" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Строит график распределения длин последовательностей.</p>
+<p>Для каждой длины показывает количество прочтений
+такой длины.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если FASTQ-файл не содержит последовательностей.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="samreader">
+<h3>SamReader<a class="headerlink" href="#samreader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.sam_reader.</span></span><span class="sig-name descname"><span class="pre">SamReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.genomic_data_reader.GenomicDataReader" title="readers.genomic_data_reader.GenomicDataReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenomicDataReader</span></code></a></p>
+<p>Чтение SAM-файлов.</p>
+<p class="rubric">Заметки</p>
+<p>Группы заголовка задаются префиксами <code class="docutils literal notranslate"><span class="pre">&#64;HD</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;SQ</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;RG</span></code>,
+<code class="docutils literal notranslate"><span class="pre">&#64;PG</span></code>, <code class="docutils literal notranslate"><span class="pre">&#64;CO</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader.get_header">
+<span class="sig-name descname"><span class="pre">get_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader.get_header"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader.get_header" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает заголовок файла в виде списка строк.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строки заголовка файла.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader.get_header_group">
+<span class="sig-name descname"><span class="pre">get_header_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader.get_header_group"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader.get_header_group" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает строки заголовка, относящиеся к указанной группе.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> (<em>str</em>) – Имя группы заголовка.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Строки заголовка, принадлежащие группе.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader.fetch">
+<span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader.fetch"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader.fetch" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Последовательно возвращает записи, расположенные в заданном
+геномном интервале или пересекающиеся с ним.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosome</strong> (<em>str</em>) – Имя хромосомы (контига).</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – Начало интервала (1-based, включительно).</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – Конец интервала (1-based, включительно).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict</em> – Очередная запись, пересекающаяся с интервалом.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ValueError</strong> – Если интервал задан некорректно.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Iterator</em>[dict[str, str | int]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader.count_alignments">
+<span class="sig-name descname"><span class="pre">count_alignments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader.count_alignments"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader.count_alignments" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает общее количество выравниваний в файле.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Число записей-выравниваний (без строк заголовка).</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.sam_reader.SamReader.count_by_chromosome">
+<span class="sig-name descname"><span class="pre">count_by_chromosome</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/sam_reader.html#SamReader.count_by_chromosome"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.sam_reader.SamReader.count_by_chromosome" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает статистику количества выравниваний по хромосомам.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Таблица с колонками <code class="docutils literal notranslate"><span class="pre">chromosome</span></code> и <code class="docutils literal notranslate"><span class="pre">count</span></code>,
+отсортированная по убыванию <code class="docutils literal notranslate"><span class="pre">count</span></code>.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="vcfreader">
+<h3>VcfReader<a class="headerlink" href="#vcfreader" title="Ссылка на этот заголовок">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">readers.vcf_reader.</span></span><span class="sig-name descname"><span class="pre">VcfReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Базовые классы: <a class="reference internal" href="#readers.genomic_data_reader.GenomicDataReader" title="readers.genomic_data_reader.GenomicDataReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">GenomicDataReader</span></code></a></p>
+<p>Класс для чтения и анализа файлов формата VCF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em><em> | </em><em>Path</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader.get_header">
+<span class="sig-name descname"><span class="pre">get_header</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader.get_header"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader.get_header" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Получает полный заголовок VCF-файла.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Строки заголовка, включая метаданные и строку с названиями колонок.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader.get_header_group">
+<span class="sig-name descname"><span class="pre">get_header_group</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader.get_header_group"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader.get_header_group" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Получает строки указанной группы метаданных VCF-файла.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>group</strong> (<em>str</em>) – Название группы метаданных без префикса „##“,
+например „INFO“, „FORMAT“ или „FILTER“.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Список строк указанной группы.
+Если группа отсутствует, возвращается пустой список.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+<dt class="field-even">Исключение<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Если название группы не является строкой.</p></li>
+<li><p><strong>ValueError</strong> – Если название группы пустое.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader.count_variants">
+<span class="sig-name descname"><span class="pre">count_variants</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader.count_variants"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader.count_variants" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает количество вариантов в VCF-файле.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Общее количество вариантов в файле.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader.fetch">
+<span class="sig-name descname"><span class="pre">fetch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader.fetch"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader.fetch" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Последовательно возвращает варианты, позиции которых входят в указанный геномный интервал.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosome</strong> (<em>str</em>) – Имя хромосомы.</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – Начало интервала (1-based, включительно).</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – Конец интервала (1-based, включительно).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Yields<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>dict[str, str]</em> – Варианты, позиции которых входят в указанный геномный интервал.</p>
+</dd>
+<dt class="field-odd">Исключение<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>TypeError</strong> – Если имя хромосомы или координаты имеют некорректный тип.</p></li>
+<li><p><strong>ValueError</strong> – Если имя хромосомы пустое или границы интервала некорректны.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Iterator</em>[dict[str, str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="readers.vcf_reader.VcfReader.count_by_region">
+<span class="sig-name descname"><span class="pre">count_by_region</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chromosome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/readers/vcf_reader.html#VcfReader.count_by_region"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#readers.vcf_reader.VcfReader.count_by_region" title="Ссылка на это определение">¶</a></dt>
+<dd><p>Возвращает статистику количества вариантов в заданном геномном интервале.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chromosome</strong> (<em>str</em>) – Имя хромосомы.</p></li>
+<li><p><strong>start</strong> (<em>int</em>) – Начало интервала (1-based, включительно).</p></li>
+<li><p><strong>end</strong> (<em>int</em>) – Конец интервала (1-based, включительно).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Таблица с колонками chromosome, start, end, count.
+count — количество вариантов в указанном интервале.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+<dt class="field-even">Исключение<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>TypeError</strong> – Если имя хромосомы или координаты имеют некорректный тип.</p></li>
+<li><p><strong>ValueError</strong> – Если имя хромосомы пустое, границы интервала некорректны
+    или VCF-файл имеет некорректную структуру.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">BioFormat Toolkit</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Навигация</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Обзор проекта</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Справочник классов</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">Базовые классы</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">Классы последовательностей</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">Классы для чтения файлов</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="overview.html" title="предыдущая глава">Обзор проекта</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 9.1.0</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
