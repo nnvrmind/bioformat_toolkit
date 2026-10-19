@@ -77,7 +77,10 @@ def demo_fasta(filepath: Path) -> None:
     print("\nПервые 10 последовательностей:")
     for record in islice(fasta_reader, 10):
         print(f"Идентификатор: {record.seq_id}")
-        print(f"Последовательность: {record.seq}")
+        if len(record.seq) > 100:
+            print(f"Первые 100 символов последовательности: {record.seq[:100]}...")
+        else:
+            print(f"Последовательность: {record.seq}")
         print(f"Длина: {len(record)}")
         print()
 
