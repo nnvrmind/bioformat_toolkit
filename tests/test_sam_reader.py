@@ -123,13 +123,15 @@ def test_fetch_outside(simple_sam) -> None:
 
     Expected
     --------
-    ``read1`` занимает 100-109; запрос ``[110, 200]`` не пересекается → пусто.
+    ``read1`` занимает 100-109; запрос ``[115, 200]`` не пересекается → пусто.
+    ``read2`` занимает 105-114; запрос ``[115, 200]`` не пересекается → пусто.
+
 
     Checks
     ------
     Список результатов пуст.
     """
-    assert list(simple_sam.fetch("chr1", 110, 200)) == []
+    assert list(simple_sam.fetch("chr1", 115, 200)) == []
 
 
 def test_fetch_invalid_args(simple_sam) -> None:
