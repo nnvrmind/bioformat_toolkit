@@ -4,7 +4,7 @@ import pandas as pd
 import re
 
 _REF_CONSUMING = frozenset("MDN=X")
-
+_PRINT_LEN = 50
 
 def _ref_span(cigar: str) -> int:
     """Длина участка на референсе, занимаемая выравниванием по CIGAR."""
@@ -14,6 +14,12 @@ def _ref_span(cigar: str) -> int:
             span += int(length)
     return span
 
+
+def _short(value: str, limit: int = _PRINT_LEN) -> str:
+    """Обрезает строку для вывода, добавляя '...', если она длиннее limit."""
+    if len(value) <= limit:
+        return value
+    return value[:limit] + "..."
 
 class SamReader(GenomicDataReader):
     """
@@ -101,7 +107,7 @@ class SamReader(GenomicDataReader):
         return [line for line in self.get_header()
                 if line.startswith(prefix)]
 
-    def fetch(self, chromosome: str, start: int, end: int) -> Iterator[dict]:
+    def fetch(self, chromosome: str, start: int, end: int) -> Iterator[dict[str, str | int]]:
         """
         Последовательно возвращает записи, расположенные в заданном
         геномном интервале или пересекающиеся с ним.
@@ -142,8 +148,12 @@ class SamReader(GenomicDataReader):
             rec_end = rec_start + _ref_span(record["cigar"]) - 1  # 1-based, включительно
 
             if rec_start <= end and rec_end >= start:
-                yield record
-
+                yield {
+                    **record,
+                    "seq": _short(record["seq"]),
+                    "qual": _short(record["qual"]),
+                }
+    
     def count_alignments(self) -> int:
         """
         Возвращает общее количество выравниваний в файле.
