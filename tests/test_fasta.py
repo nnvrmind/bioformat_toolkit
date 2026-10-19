@@ -15,8 +15,10 @@ from typing import List
 from readers.seq import Seq
 from readers.fasta_reader import FastaReader
 
+DATA_DIR = Path(__file__).parent / "data" / "fasta"
 
-def test_seq_length():
+
+def test_seq_length() -> None:
     """
     Проверяет корректность работы метода __len__.
 
@@ -33,7 +35,7 @@ def test_seq_length():
     assert len(seq) == 4, "Длина последовательности 'ATGC' должна быть 4"
 
 
-def test_seq_str():
+def test_seq_str() -> None:
     """
     Проверяет корректность работы метода __str__.
 
@@ -51,7 +53,7 @@ def test_seq_str():
     assert str(seq) == expected, f"Ожидалось '{expected}', получено '{str(seq)}'"
 
 
-def test_seq_attributes():
+def test_seq_attributes() -> None:
     """
     Проверяет сохранение атрибутов при создании объекта.
 
@@ -68,7 +70,7 @@ def test_seq_attributes():
     assert seq.seq == "ATGC", "Атрибут seq сохранён неверно"
 
 
-def test_seq_empty_id():
+def test_seq_empty_id() -> None:
     """
     Проверяет валидацию пустого идентификатора.
 
@@ -84,7 +86,7 @@ def test_seq_empty_id():
         Seq("", "ACGT")
 
 
-def test_seq_empty_sequence():
+def test_seq_empty_sequence() -> None:
     """
     Проверяет валидацию пустой последовательности.
 
@@ -100,7 +102,7 @@ def test_seq_empty_sequence():
         Seq("seq1", "")
 
 
-def test_seq_wrong_type_id():
+def test_seq_wrong_type_id() -> None:
     """
     Проверяет валидацию типа идентификатора.
 
@@ -116,7 +118,7 @@ def test_seq_wrong_type_id():
         Seq(123, "ACGT")
 
 
-def test_seq_wrong_type_seq():
+def test_seq_wrong_type_seq() -> None:
     """
     Проверяет валидацию типа последовательности.
 
@@ -132,7 +134,7 @@ def test_seq_wrong_type_seq():
         Seq("seq1", 123)
 
 
-def test_fasta_reader_reads_all_records():
+def test_fasta_reader_reads_all_records() -> None:
     """
     Проверяет, что FastaReader читает все записи из файла.
 
@@ -145,35 +147,63 @@ def test_fasta_reader_reads_all_records():
     ------
     Количество полученных записей из example.fasta должно быть равно 3.
     """
-    data_path: Path = Path(__file__).parent / "data" / "example.fasta"
-    reader: FastaReader = FastaReader(data_path)
+    
+    reader: FastaReader = FastaReader(DATA_DIR / "example.fasta")
     records: List[Seq] = list(reader)
     assert len(records) == 3, "Должно быть прочитано 3 записи"
 
 
-def test_fasta_reader_content():
+def test_fasta_reader_content() -> None:
     """
-    Проверяет корректность извлечения данных из первой записи.
+    Проверяет корректность извлечения данных и склейку многострочных записей.
 
     Expected
     --------
-    Идентификатор и последовательность первой записи соответствуют
-    данным в файле example.fasta.
+    Все записи читаются правильно, а последовательность, разбитая
+    на несколько строк в файле, склеивается в одну.
 
     Checks
     ------
-    seq_id первой записи == "seq1", seq == "ACGT".
+    Проверяются id и seq всех трех записей. Для seq1 проверяется склейка.
     """
-    data_path: Path = Path(__file__).parent / "data" / "example.fasta"
-    reader: FastaReader = FastaReader(data_path)
+    reader: FastaReader = FastaReader(DATA_DIR / "example.fasta")
     records: List[Seq] = list(reader)
+    
     assert records[0].seq_id == "seq1", "Неверный seq_id первой записи"
-    assert records[0].seq == "ACGT", "Неверная последовательность первой записи"
+    assert records[0].seq == (
+        "ACGTATGCCTAGCGATCTGATCGATGCCTACTCATGCAGATCGTACGTCGTACGTGCTGCAT"
+        "AGACTATCACTGTTTTCATCTACCGCGCGCGCGCTATCGTAGCATGCATCAGCATCGATTGG"
+        "TCAGTG"
+    ), "Многострочная последовательность seq1 склеена неверно"
+    
+    assert records[1].seq_id == "seq2", "Неверный seq_id второй записи"
+    assert records[1].seq == "ATGCAT", "Неверная последовательность второй записи"
+    
+    assert records[2].seq_id == "seq3", "Неверный seq_id третьей записи"
+    assert records[2].seq == "GG", "Неверная последовательность третьей записи"
 
 
-def test_fasta_reader_invalid_file(tmp_path):
+def test_fasta_reader_blank_lines() -> None:
     """
-    Проверяет обработку некорректного FASTA-файла.
+    Проверяет, что пустые строки между записями не ломают чтение.
+
+    Expected
+    --------
+    FastaReader игнорирует пустые строки и корректно читает записи.
+
+    Checks
+    ------
+    Из файла blank_lines.fasta читаются 2 записи, первая имеет seq == "ACGT".
+    """
+    reader: FastaReader = FastaReader(DATA_DIR / "blank_lines.fasta")
+    records: List[Seq] = list(reader)
+    assert len(records) == 2, "Должно быть прочитано 2 записи"
+    assert records[0].seq == "ACGT", "Неверная последовательность в первой записи"
+
+
+def test_fasta_reader_invalid_header() -> None:
+    """
+    Проверяет обработку файла без символа '>'.
 
     Expected
     --------
@@ -182,17 +212,49 @@ def test_fasta_reader_invalid_file(tmp_path):
 
     Checks
     ------
-    При чтении файла с содержимым "ACGT\n" выбрасывается ValueError.
+    При чтении invalid_header.fasta выбрасывается ValueError.
     """
-    bad_file: Path = tmp_path / "bad.fasta"
-    bad_file.write_text("ACGT\n", encoding="utf-8")
-    reader: FastaReader = FastaReader(bad_file)
-    
+    reader: FastaReader = FastaReader(DATA_DIR / "invalid_header.fasta")
     with pytest.raises(ValueError):
         list(reader)
 
 
-def test_fasta_reader_count_sequences():
+def test_fasta_reader_header_only() -> None:
+    """
+    Проверяет обработку файла, содержащего только заголовок.
+
+    Expected
+    --------
+    Если у заголовка нет последовательности, FastaReader
+    должен выбросить ValueError.
+
+    Checks
+    ------
+    При чтении header_only.fasta выбрасывается ValueError.
+    """
+    reader: FastaReader = FastaReader(DATA_DIR / "header_only.fasta")
+    with pytest.raises(ValueError):
+        list(reader)
+
+
+def test_fasta_reader_empty_file() -> None:
+    """
+    Проверяет обработку пустого файла.
+
+    Expected
+    --------
+    Если файл пуст, FastaReader должен выбросить ValueError.
+
+    Checks
+    ------
+    При чтении empty.fasta выбрасывается ValueError.
+    """
+    reader: FastaReader = FastaReader(DATA_DIR / "empty.fasta")
+    with pytest.raises(ValueError):
+        list(reader)
+
+
+def test_fasta_reader_count_sequences() -> None:
     """
     Проверяет работу унаследованного метода count_sequences().
 
@@ -204,12 +266,11 @@ def test_fasta_reader_count_sequences():
     ------
     Для example.fasta метод count_sequences() возвращает 3.
     """
-    data_path: Path = Path(__file__).parent / "data" / "example.fasta"
-    reader: FastaReader = FastaReader(data_path)
+    reader: FastaReader = FastaReader(DATA_DIR / "example.fasta")
     assert reader.count_sequences() == 3, "Метод count_sequences вернул неверное число"
 
 
-def test_fasta_reader_average_length():
+def test_fasta_reader_average_length() -> None:
     """
     Проверяет работу унаследованного метода average_length().
 
@@ -219,8 +280,7 @@ def test_fasta_reader_average_length():
 
     Checks
     ------
-    Для длин 4, 6 и 2 средняя длина должна быть равна 4.0.
+    Для длин 126, 6 и 2 средняя длина должна быть равна 44.67.
     """
-    data_path: Path = Path(__file__).parent / "data" / "example.fasta"
-    reader: FastaReader = FastaReader(data_path)
-    assert reader.average_length() == 4.0, "Метод average_length вернул неверное значение"
+    reader: FastaReader = FastaReader(DATA_DIR / "example.fasta")
+    assert round(reader.average_length(), 2) == 46.0, "Метод average_length вернул неверное значение"
