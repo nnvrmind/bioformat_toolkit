@@ -28,9 +28,14 @@ class FastaReader(SequenceReader):
         Raises
         ------
         ValueError
-            Если файл не соответствует формату FASTA (нет символа '>' в начале).
+            Если файл пуст или не соответствует формату FASTA.
         """
         with open(self.filepath, "r", encoding="utf-8") as file:
+            first_line = file.readline()
+            if not first_line:
+                raise ValueError("Файл пуст")
+            file.seek(0)
+
             current_id: Optional[str] = None
             current_seq: List[str] = []
 
@@ -41,6 +46,8 @@ class FastaReader(SequenceReader):
 
                 if line.startswith(">"):
                     if current_id is not None:
+                        if not current_seq:
+                            raise ValueError(f"Заголовок '{current_id}' не имеет последовательности")
                         yield Seq(current_id, "".join(current_seq))
                     
                     current_id = line[1:]
@@ -48,7 +55,9 @@ class FastaReader(SequenceReader):
                 else:
                     if current_id is None:
                         raise ValueError("Файл не соответствует формату FASTA: нет заголовка '>'")
-                    current_seq.append(line)
+                    current_seq.append(line.replace(" ", ''))
 
             if current_id is not None:
+                if not current_seq:
+                    raise ValueError(f"Заголовок '{current_id}' не имеет последовательности")
                 yield Seq(current_id, "".join(current_seq))
